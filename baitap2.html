@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>session36</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        border-radius: 5px;
+        border: none;
+      }
+      button {
+        background-color: green;
+        color: white;
+        padding: 5px;
+        opacity: 0.8;
+      }
+      button:hover {
+        opacity: 1;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      style="
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: max-content;
+        margin: auto;
+      "
+    >
+      <h1>Bạn thích món nào nhất?</h1>
+      <div
+        id="list"
+        style="
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          width: max-content;
+          margin: auto;
+        "
+      ></div>
+    </div>
+  </body>
+  <script>
+    listItem = JSON.parse(localStorage.getItem("listItem")) || [
+      {
+        img: "https://vidian.vn/img-thumbnail/img-thumbnail-1726315913665.jpg",
+        name: "Gia Cát Uyên",
+        like: 0,
+      },
+      {
+        img: "https://vidian.vn/img-thumbnail/img-thumbnail-1726315913665.jpg",
+        name: "Gia Cát Uyên",
+        like: 0,
+      },
+      {
+        img: "https://vidian.vn/img-thumbnail/img-thumbnail-1726315913665.jpg",
+        name: "Gia Cát Uyên",
+        like: 0,
+      },
+    ];
+    let list = document.querySelector("#list");
+    render();
+    function render() {
+      list.innerHTML = listItem
+        .map(
+          (value, index) =>
+            `<div style="display:flex;gap:10px;box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);padding:10px;align-items: center;"><img style="height: 100px;" src="${value.img}"><div style="flex:1;display:flex;flex-direction: column;gap:5px"><h2>${value.name}</h2><p>${value.like} lượt thích</p><button onclick="moreLike(${index})">Thích +1</button></div></div>`
+        )
+        .join("");
+      localStorage.setItem("listItem", JSON.stringify(listItem));
+    }
+    function moreLike(index) {
+      listItem[index].like++;
+      render();
+    }
+  </script>
+</html>

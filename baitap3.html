@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>session36</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        border: none;
+      }
+      button {
+        padding: 10px;
+        border-radius: 5px;
+        color: white;
+        opacity: 0.8;
+      }
+      button:hover {
+        opacity: 1;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="background-color">
+      <h1 style="text-align: center">Chọn màu nền bạn yêu thích</h1>
+      <div
+        style="
+          display: flex;
+          gap: 10px;
+          justify-content: center;
+          margin: 30px 0 30px;
+        "
+      >
+        <button
+          style="background-color: rgb(255, 0, 0)"
+          onclick="change(`rgba(255, 0, 0,0.5)`)"
+        >
+          Đỏ</button
+        ><button
+          style="background-color: rgb(0, 0, 255)"
+          onclick="change(`rgba(0, 0, 255,0.5)`)"
+        >
+          Xanh</button
+        ><button
+          style="background-color: rgb(255, 255, 0); color: black"
+          onclick="change(`rgba(255, 255, 0,0.5)`)"
+        >
+          Vàng</button
+        ><button
+          style="background-color: rgb(128, 0, 128)"
+          onclick="change(`rgba(128, 0, 128,0.5)`)"
+        >
+          Tím
+        </button>
+      </div>
+      <p style="text-align: center">
+        Trang sẽ ghi nhớ màu bàn đã chọn kể cả khi tại lại!
+      </p>
+    </div>
+    <script>
+      let backgroundColor = document.querySelector("#background-color");
+      backgroundColor.style.backgroundColor =
+        localStorage.getItem("backgroundColor");
+      function change(color) {
+        backgroundColor.style.backgroundColor = color;
+        localStorage.setItem("backgroundColor", color);
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>session36</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        border-radius: 5px;
+        border: none;
+      }
+      input {
+        border: 1px solid gray;
+        padding: 5px;
+      }
+      button {
+        padding: 5px;
+        background-color: blue;
+        color: white;
+      }
+    </style>
+  </head>
+  <body style="padding: 10px">
+    <div
+      id="box"
+      style="
+        width: max-content;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+      "
+    >
+      <h1 id="h1" style="margin: 15px 0 15px">Nhập tên của bạn</h1>
+      <div style="display: flex; gap: 10px; justify-content: center">
+        <input id="input" type="text" /><button id="button" onclick="setName()">
+          Lưu
+        </button>
+      </div>
+    </div>
+  </body>
+  <script>
+    let saveName = localStorage.getItem("saveName") || "";
+    let box = document.querySelector("#box");
+    let h1 = document.querySelector("#h1");
+    let input = document.querySelector("#input");
+    let button = document.querySelector("#button");
+    render();
+    function render() {
+      if (saveName) {
+        h1.textContent = `👋Chào bạn, ${saveName}!`;
+        input.style.display = "none";
+        button.textContent = "Đổi tên";
+      } else {
+        h1.textContent = "Nhập tên của bạn";
+        input.style.display = "block";
+        button.textContent = "Lưu";
+      }
+      localStorage.setItem("saveName", saveName);
+    }
+    function setName() {
+      if (saveName) {
+        h1.textContent = "Nhập tên của bạn";
+        input.style.display = "block";
+        button.textContent = "Lưu";
+        input.value = "";
+        saveName = "";
+        setName();
+      } else {
+        saveName = input.value;
+      }
+      render();
+    }
+  </script>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <title>session36</title>
+    <link rel="stylesheet" href="./baitap5.css" />
+  </head>
+  <body>
+    <h2>🗂️ Quản lý công việc (Task Board)</h2>
+
+    <div class="task-input">
+      <input type="text" id="taskName" placeholder="Nhập tên công việc..." />
+      <button onclick="addTask()">Thêm</button>
+    </div>
+
+    <div class="board">
+      <div class="column" id="pendingCol">
+        <h3>🕐 Chờ xử lý</h3>
+        <div id="pendingTasks">
+          <!-- <div class="task">
+            <p>Nội dung</p>
+            <button>Chuyển tiếp</button>
+          </div> -->
+        </div>
+      </div>
+      <div class="column" id="inProgressCol">
+        <h3>🔨 Đang làm</h3>
+        <div id="inProgressTasks"></div>
+      </div>
+      <div class="column" id="doneCol">
+        <h3>✅ Hoàn thành</h3>
+        <div id="doneTasks">
+          <!-- <div class="task">
+            <p>Nội dung</p>
+          </div> -->
+        </div>
+      </div>
+    </div>
+    <script>
+      listTask = JSON.parse(localStorage.getItem("listTask")) || [
+        { task: "Nội dung", status: 0 },
+      ];
+      let pendingTasks = document.querySelector("#pendingTasks");
+      let inProgressTasks = document.querySelector("#inProgressTasks");
+      let doneTasks = document.querySelector("#doneTasks");
+      render();
+      function render() {
+        pendingTasks.innerHTML = listTask
+          .map(
+            (value, index) =>
+              `${
+                value.status === 0
+                  ? `<div class="task">
+                    <p>${value.task}</p>
+                    <button onclick="update(${index})">Chuyển tiếp</button>
+                  </div>`
+                  : ""
+              }`
+          )
+          .join("");
+        inProgressTasks.innerHTML = listTask
+          .map(
+            (value, index) =>
+              `${
+                value.status === 1
+                  ? `<div class="task">
+                    <p>${value.task}</p>
+                    <button onclick="update(${index})">Chuyển tiếp</button>
+                  </div>`
+                  : ""
+              }`
+          )
+          .join("");
+        doneTasks.innerHTML = listTask
+          .map(
+            (value) =>
+              `${
+                value.status === 2
+                  ? `<div class="task">
+                    <p>${value.task}</p>
+                  </div>`
+                  : ""
+              }`
+          )
+          .join("");
+        localStorage.setItem("listTask", JSON.stringify(listTask));
+      }
+      function update(index) {
+        listTask[index].status++;
+        render();
+      }
+      let taskName = document.querySelector("#taskName");
+      function addTask() {
+        if (taskName.value) {
+          listTask.push({ task: taskName.value, status: 0 });
+          render();
+        } else {
+          alert("Không được để trống");
+        }
+      }
+    </script>
+  </body>
+</html>
